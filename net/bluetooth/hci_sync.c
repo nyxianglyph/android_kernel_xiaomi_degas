@@ -4678,11 +4678,18 @@ static int hci_get_mws_transport_config_sync(struct hci_dev *hdev)
 /* Check for Synchronization Train support */
 static int hci_read_sync_train_params_sync(struct hci_dev *hdev)
 {
+	/* Halium: BT chip returns error for HCI_OP_READ_SYNC_TRAIN_PARAMS,
+	 * which causes the initialization to fail. As this feature is not used
+	 * anywhere, skipping reading the parameters should be safe. */
+#if 0
 	if (!lmp_sync_train_capable(hdev))
 		return 0;
 
 	return __hci_cmd_sync_status(hdev, HCI_OP_READ_SYNC_TRAIN_PARAMS,
 				     0, NULL, HCI_CMD_TIMEOUT);
+#else
+	return 0;
+#endif
 }
 
 /* Enable Secure Connections if supported and configured */
