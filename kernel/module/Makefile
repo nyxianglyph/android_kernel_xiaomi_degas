@@ -8,6 +8,7 @@
 KCOV_INSTRUMENT_main.o := n
 
 obj-y += main.o strict_rwx.o
+obj-y += gki_quirks.o
 obj-$(CONFIG_MODULE_DECOMPRESS) += decompress.o
 obj-$(CONFIG_MODULE_SIG) += signing.o
 obj-$(CONFIG_MODULE_SIG_PROTECT) += gki_module.o

@@ -106,6 +106,9 @@ long module_get_offset(struct module *mod, unsigned int *size, Elf_Shdr *sechdr,
 char *module_flags(struct module *mod, char *buf, bool show_state);
 size_t module_flags_taint(unsigned long taints, char *buf);
 
+unsigned long gki_quirks_get_hooked_symbol_value(const struct module *mod,
+				const char *name, unsigned long value);
+
 static inline void module_assert_mutex_or_preempt(void)
 {
 #ifdef CONFIG_LOCKDEP
