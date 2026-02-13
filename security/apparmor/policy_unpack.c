@@ -285,8 +285,8 @@ fail:
 
 static bool unpack_u16(struct aa_ext *e, u16 *data, const char *name)
 {
-	if (unpack_nameX(e, AA_U16, name)) {
-		if (!inbounds(e, sizeof(u16)))
+	if (aa_unpack_nameX(e, AA_U16, name)) {
+		if (!aa_inbounds(e, sizeof(u16)))
 			return false;
 		if (data)
 			*data = le16_to_cpu(get_unaligned((__le16 *) e->pos));
@@ -820,7 +820,7 @@ static struct aa_profile *unpack_profile(struct aa_ext *e, char **ns_name)
 		goto fail;
 	}
 
-	size = unpack_array(e, "net_allowed_af");
+	size = aa_unpack_array(e, "net_allowed_af");
 	if (size || VERSION_LT(e->version, v8)) {
 		profile->net_compat = kzalloc(sizeof(struct aa_net_compat), GFP_KERNEL);
 		if (!profile->net_compat) {
@@ -847,7 +847,7 @@ static struct aa_profile *unpack_profile(struct aa_ext *e, char **ns_name)
 			if (!unpack_u16(e, &profile->net_compat->quiet[i], NULL))
 				goto fail;
 		}
-		if (size && !unpack_nameX(e, AA_ARRAYEND, NULL))
+		if (size && !aa_unpack_nameX(e, AA_ARRAYEND, NULL))
 			goto fail;
 		if (VERSION_LT(e->version, v7)) {
 			/* pre v7 policy always allowed these */
