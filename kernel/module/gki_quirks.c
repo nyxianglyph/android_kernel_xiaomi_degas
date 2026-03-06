@@ -25,8 +25,9 @@ static const struct gki_quirks_hook gki_quirks_list[] = {
 	 * with the global ids from task_struct of "current".
 	 */
 	{ "mali_kbase", "find_get_pid", find_get_pid_global_ns },
-	// Ditto for MT6789 SoC devices, needed for Waydroid
+	// Ditto for MTK SoC devices, needed for Waydroid
 	{ "mali_kbase_mt6789", "find_get_pid", find_get_pid_global_ns },
+        { "mali_kbase_mt6878_r44", "find_get_pid", find_get_pid_global_ns },
 
 	{ } /* terminating entry must be last */
 };
