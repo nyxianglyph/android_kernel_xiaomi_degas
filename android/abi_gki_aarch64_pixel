@@ -148,6 +148,7 @@
   bpf_trace_run7
   bpf_trace_run8
   bpf_trace_run9
+  bt_err
   build_skb
   bus_find_device
   bus_for_each_dev
@@ -1047,6 +1048,13 @@
   handle_sysrq
   hashlen_string
   have_governor_per_policy
+  hci_alloc_dev_priv
+  hci_free_dev
+  hci_recv_frame
+  hci_register_dev
+  hci_resume_dev
+  hci_suspend_dev
+  hci_unregister_dev
   hdmi_avi_infoframe_pack
   hex2bin
   hex_dump_to_buffer
