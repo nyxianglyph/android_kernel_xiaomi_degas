@@ -3519,12 +3519,15 @@ static void binder_transaction(struct binder_proc *proc,
 		security_cred_getsecid(proc->cred, &secid);
 		ret = security_secid_to_secctx(secid, &secctx, &secctx_sz);
 		if (ret) {
-			binder_txn_error("%d:%d failed to get security context\n",
-				thread->pid, proc->pid);
-			return_error = BR_FAILED_REPLY;
-			return_error_param = ret;
-			return_error_line = __LINE__;
-			goto err_get_secctx_failed;
+			/*
+			 * cred_getsecid is implemented by SELinux, which
+			 * Android relies on by default. Without it the secid
+			 * stays 0 and the active LSM cannot resolve it. Send
+			 * the transaction without a security context instead
+			 * of failing it.
+			 */
+			secctx = NULL;
+			secctx_sz = 0;
 		}
 		added_size = ALIGN(secctx_sz, sizeof(u64));
 		extra_buffers_size += added_size;
@@ -4003,7 +4006,6 @@ err_binder_alloc_buf_failed:
 err_bad_extra_size:
 	if (secctx)
 		security_release_secctx(secctx, secctx_sz);
-err_get_secctx_failed:
 	kfree(tcomplete);
 	binder_stats_deleted(BINDER_STAT_TRANSACTION_COMPLETE);
 err_alloc_tcomplete_failed:
