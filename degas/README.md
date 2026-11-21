@@ -42,7 +42,8 @@ with identical vendor/OEM data offsets. Do not rely on CRCs alone.
 
 ```bash
 # from the root of a Kleaf checkout of degas/manifest_15497637.xml, this tree as common/
-common/degas/build.sh ut            # Ubuntu Touch / Sailfish (AppArmor first)
+common/degas/build.sh ut            # Ubuntu Touch (AppArmor first)
+common/degas/build.sh sfos          # Sailfish OS: ut + sfos-degas.config
 common/degas/build.sh androidtest   # SELinux first: boots HyperOS and TWRP
 ```
 
@@ -63,6 +64,7 @@ avbtool add_hash_footer --image boot.img --partition_name boot --partition_size 
 |---|---|
 | HyperOS on this kernel (`androidtest`) | ✅ boots, SELinux enforcing, 468 modules, Wi-Fi, display, audio, both SIMs on LTE |
 | Ubuntu Touch 24.04 (`ut`) | ✅ boots to Lomiri, see the Ubuntu Touch adaptation repo |
+| `sfos` flavour ABI | ✅ 0 CRC mismatches, no struct size changes vs `ut` (pahole); only new AH/IPsec structs |
 | `ut` flavour with Android/TWRP | ❌ Android init needs SELinux as the first major LSM |
 
 The 9 modules that do not load (`bluetooth`, `btbcm`, `btqca`, `btsdio`,

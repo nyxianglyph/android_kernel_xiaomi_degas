@@ -6,9 +6,10 @@
 #  && cp common/degas/manifest_15497637.xml .repo/manifests/ && repo init -m manifest_15497637.xml
 #  && repo sync), with this tree as common/.
 #
-#   degas/build.sh [ut|androidtest] [out-dir]
+#   degas/build.sh [ut|sfos|androidtest] [out-dir]
 #
-#   ut           halium.config as is (AppArmor first) - Ubuntu Touch / Sailfish
+#   ut           halium.config as is (AppArmor first) - Ubuntu Touch
+#   sfos         + sfos-degas.config (mer_verify_kernel_config items) - Sailfish OS
 #   androidtest  + degas_androidtest.config (SELinux first) - boots HyperOS/TWRP
 #
 # Plain make inside the Kleaf environment: the hermetic toolchain avoids host
@@ -18,6 +19,7 @@ flavor=${1:-ut}
 root=$(pwd)
 out=$(realpath -m "${2:-out/halium-$flavor}")
 frags="gki_defconfig halium.config"
+[ "$flavor" = sfos ] && frags="$frags sfos-degas.config"
 [ "$flavor" = androidtest ] && frags="$frags degas_androidtest.config"
 mkdir -p "$out"
 env -i HOME="$HOME" USER="${USER:-build}" TERM=xterm LANG=C.UTF-8 PATH=/usr/bin:/bin bash -c "
