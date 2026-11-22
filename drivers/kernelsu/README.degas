@@ -1,0 +1,7 @@
+KernelSU kernel driver, imported unmodified from
+https://github.com/tiann/KernelSU tag v3.3.1 (0c0fdb960178fa12d80d6cbcfdcb6ad8be6a865d),
+directory kernel/, except for the version fallback in Kbuild (the tree is not
+a KernelSU git repository, so the version is fixed to the official 32680).
+
+Built in (CONFIG_KSU=y, the Kconfig default). Pair it with the official
+KernelSU manager v3.3.1 (me.weishu.kernelsu).
