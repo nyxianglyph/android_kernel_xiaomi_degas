@@ -170,4 +170,8 @@ if test -n "${BUILD_NUMBER}"; then
 	res="$res-ab${BUILD_NUMBER}"
 fi
 
+# degas: a name for the build, after the Android release and the commit
+# (see degas/build.sh).
+res="${res}${RELEASE_SUFFIX}"
+
 echo "$res"
